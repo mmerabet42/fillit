@@ -6,11 +6,14 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 15:23:38 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/16 17:43:04 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/16 18:27:47 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
 
 t_bool	ft_check_tetris(char *buf, int buffsize)
 {
@@ -35,35 +38,37 @@ t_bool	ft_check_tetris(char *buf, int buffsize)
 t_list	*ft_get_tetris(int fd)
 {
 	int	i;
-	int	ret;
 	char	buf[5];
 	int		buffsize;
+	t_list	*lst;
 	char	*str;
 
-	str = NULL;
-	i = 0;
 	buffsize = 5;
-	while ((ret = read(fd, buf, buffsize) == buffsize))
+	i = 0;
+	while (read(fd, buf, buffsize) == buffsize)
 	{
-		buf[ret] = '\0';
-		if (ft_check_tetris(buf, buffsize == FALSE))
+		str = NULL;
+		if (ft_check_tetris(buf, buffsize) == FALSE)
 			return (NULL);
 		else
 		{
-			if (str == NULL)
+			if (i == 0)
+			{
 				str = buf;
+				++i;
+			}
+			else if (i == 3)
+			{
+				i = 0;
+				str = ft_strjoin(buf, str);
+				lst
+				(buffsize == 5) ? (buffsize = 1) : (buffsize = 5);
+			}
 			else
 			{
-				str = ft_strjoin(str, buf);
+				str = ft_strjoin(buf, str);
+				++i;
 			}
-			(buffsize == 5) ? (buffsize = 1) : (buffsize = 5);
 		}
 	}
-}
-
-int	main(char **argv)
-{
-	fd = open(argv[1], O_RDONLY);
-	printf("%s\n", ft_get_tetris(fd);
-			return (0);
 }
