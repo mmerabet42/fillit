@@ -6,14 +6,17 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 15:23:38 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/16 18:27:47 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/16 19:22:51 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
+#include "libft/libft.h"
+
+static void	brint(t_list *lst)
+{
+	printf("%s\n", lst->content);
+}
 
 t_bool	ft_check_tetris(char *buf, int buffsize)
 {
@@ -29,7 +32,7 @@ t_bool	ft_check_tetris(char *buf, int buffsize)
 			i++;
 		}
 	}
-	if (ft_strchr(buf, '\n') == buf[buffsize])
+	if (ft_strchr(buf, '\n') == buf + buffsize -1 )
 		return (TRUE);
 	else 
 		return (FALSE);
@@ -40,35 +43,39 @@ t_list	*ft_get_tetris(int fd)
 	int	i;
 	char	buf[5];
 	int		buffsize;
-	t_list	*lst;
 	char	*str;
+	t_list	*lst;
 
-	buffsize = 5;
+	str = NULL;
 	i = 0;
+	buffsize = 5;
 	while (read(fd, buf, buffsize) == buffsize)
 	{
-		str = NULL;
-		if (ft_check_tetris(buf, buffsize) == FALSE)
+		buf[buffsize] = '\0';
+		if (ft_check_tetris(buf, buffsize == FALSE))
 			return (NULL);
 		else
 		{
 			if (i == 0)
 			{
-				str = buf;
+				str = ft_strdup(buf);
 				++i;
 			}
 			else if (i == 3)
 			{
 				i = 0;
-				str = ft_strjoin(buf, str);
-				lst
+				str = ft_strjoin(str, buf);
+				ft_lstpush(lst, ft_lstnew(str, 21));
 				(buffsize == 5) ? (buffsize = 1) : (buffsize = 5);
+				str = NULL;
 			}
 			else
 			{
-				str = ft_strjoin(buf, str);
 				++i;
+				str = ft_strjoin(str, buf);
 			}
 		}
 	}
+	ft_lstiter(lst, brint);
+	return (NULL);
 }
