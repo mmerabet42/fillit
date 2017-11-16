@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 15:23:38 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/16 16:48:29 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/16 17:43:04 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,11 @@ t_list	*ft_get_tetris(int fd)
 			(buffsize == 5) ? (buffsize = 1) : (buffsize = 5);
 		}
 	}
+}
+
+int	main(char **argv)
+{
+	fd = open(argv[1], O_RDONLY);
+	printf("%s\n", ft_get_tetris(fd);
+			return (0);
 }
