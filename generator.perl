@@ -14,8 +14,9 @@ for (my $k = 0; $k < $x; $k++) {
 				print ".";
 			}
 		}
-				print "\n";
+		print "\n";
 	}
-			print "\n";
-
+	if ($k != $x - 1) {
+		print "\n";
+	}
 }
