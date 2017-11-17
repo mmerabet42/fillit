@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 15:23:38 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/17 20:43:17 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/17 22:54:29 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static void	brint(t_list *lst)
 
 static int	ft_check_down(int x, int y, int z, int t)
 {
-		ft_putnbr(x);
+		/*ft_putnbr(x);
 		ft_putchar(';');
 		ft_putnbr(y);
 		ft_putchar(10);
 		ft_putnbr(z);
 		ft_putchar(';');
 		ft_putnbr(t);
-		ft_putchar(10);
+		ft_putchar(10);*/
 	if (x == z && t == y + 1)
 		return (TRUE);
 	return (FALSE);
@@ -65,9 +65,9 @@ static t_bool	ft_check_pos(t_tetri *tetris)
 	d = 0;
 	while (i < 3)
 	{
-		ft_putstr("i = ");
+		/*ft_putstr("i = ");
 		ft_putnbr(i);
-		ft_putchar(10);
+		ft_putchar(10);*/
 		c = ft_check_down(TP[i].x, TP[i].y, TP[i + 1].x, TP[i + 1].y);
 		c = ft_check_down(TP[i].x, TP[i].y, TP[i + 2].x, TP[i + 2].y) + c;
 		c = ft_check_down(TP[i].x, TP[i].y, TP[i + 3].x, TP[i + 3].y) + c;
@@ -75,11 +75,11 @@ static t_bool	ft_check_pos(t_tetri *tetris)
 		d = ft_check_right(TP[i].x, TP[i].y, TP[i + 2].x, TP[i + 2].y) + d;
 		d = ft_check_right(TP[i].x, TP[i].y, TP[i + 3].x, TP[i + 3].y) + d;
 		s = s + c + d;
-		ft_putnbr(c);
+	/*	ft_putnbr(c);
 		ft_putchar(10);
 		ft_putnbr(d);
 		ft_putchar(10);
-		/*ft_putnbr(s);
+		ft_putnbr(s);
 		ft_putchar(10);*/
 		++i;
 	}
@@ -105,8 +105,6 @@ static t_tetri	*ft_build_tetris(t_list *lst, char b)
 	if (lst)
 	{
 		str = ft_strdup(lst->content);
-				ft_putstr(str);
-				ft_putchar(10);
 		while (str[i])
 		{
 			if(str[i] == '\n')
@@ -213,6 +211,6 @@ t_list	*ft_get_tetris(int fd)
 			return (NULL);
 		lst = lst->next;
 	}
-	ft_lstiter(tmp, brint);
+	//ft_lstiter(tmp, brint);
 	return (tmp);
 }
