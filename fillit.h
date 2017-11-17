@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:41:21 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/16 17:43:38 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/17 23:25:05 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,20 @@ typedef struct	s_tetri
 	t_point		points[4];
 }				t_tetri;
 
+typedef struct	s_mapdata
+{
+	int			size;
+	char		**arr;
+}				t_mapdata;
+
 typedef int t_bool;
 
 void	ft_fillit(int fd);
 
-t_list	*ft_get_tetris(int fd);
-char	**ft_resolve_tetris(t_list *tetris, int *size);
-void	ft_print_tetris(char **arr, int size);
+t_list		*ft_get_tetris(int fd);
+t_mapdata	*ft_solve_tetris(t_list *tetris);
+void		ft_map_tetris(t_list *lst, t_mapdata *mapdata);
+void		ft_print_map(t_mapdata *mapdata);
+
 
 #endif

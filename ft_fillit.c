@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:42:58 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/16 16:35:51 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/17 16:40:08 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ static t_tetri	*ft_get_tetriminos(int fd)
 
 void	ft_fillit(int fd)
 {
-	char		buff_line[5];
 	t_tetris	*tetris;
+	int			size;
 
-	if ((tetris = ft_get_tetriminos(fd))
+	if ((tetris = ft_get_tetriminos(fd)) == NULL)
+		return ;
+	ft_print_tetris(ft_solve_tetris(tetris, &size), size);
 }
