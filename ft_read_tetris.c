@@ -6,14 +6,14 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:44:21 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/18 22:45:07 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/19 16:51:02 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft/libft.h"
 
-t_bool	ft_check_char(char *buf, int buffsize)
+static t_bool	ft_check_char(char *buf, int buffsize)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ t_bool	ft_check_char(char *buf, int buffsize)
 	return (FALSE);
 }
 
-char	*ft_list_tetris(char *str, char buf[6], int i, int *buffsize)
+static char		*ft_list_tetris(char *str, char buf[6], int i, int *buffsize)
 {
 	if (i == 0)
 		str = ft_strdup(buf);
@@ -48,73 +48,30 @@ char	*ft_list_tetris(char *str, char buf[6], int i, int *buffsize)
 	return (str);
 }
 
-t_list	*ft_read_tetris(int fd)
+t_list			*ft_read_tetris(int fd, char buf[6], int buffsize, int i)
 {
-	int		i;
-	char	buf[6];
-	int		buffsize;
 	char	*str;
 	t_list	*lst;
 	t_list	*tmp;
-	char	l;
 
-	l = 'A';
 	str = NULL;
 	lst = NULL;
-	i = 0;
-	buffsize = 5;
 	while (read(fd, buf, buffsize) == buffsize)
 	{
 		buf[buffsize] = '\0';
 		if (ft_check_char(buf, buffsize) == FALSE)
 			return (NULL);
-			else
+		else
 		{
 			str = ft_list_tetris(str, buf, i, &buffsize);
 			if (i == 3)
 			{
 				tmp = ft_lstpush(lst, ft_lstnew(str, 21));
-				if (!lst)
-					lst = tmp;
+				lst = ((!lst) ? tmp : lst);
 				str = NULL;
 			}
-			if (i != 4)
-				++i;
-			else
-				i = 0;
-			/*		if (i == 0)
-					{
-					str = ft_strdup(buf);
-					++i;
-					}
-					else if (i == 3)
-					{
-					str = ft_strjoin(str, buf);
-					tmp = ft_lstpush(lst, ft_lstnew(str, 21));
-					if (lst == NULL)
-					lst = tmp;
-					(buffsize == 5) ? (buffsize = 1) : (buffsize = 5);
-					str = NULL;
-					++i;
-					}
-					else if (i == 4)
-					{
-					i = 0;
-					buffsize = 5;
-					}
-					else
-					{
-					++i;
-					str = ft_strjoin(str, buf);
-					}
-		*/}
+			i = ((i != 4) ? ++i : 0);
+		}
 	}
-	tmp = lst;
-	while (lst)
-	{
-		if (ft_build_tetri(lst, l++) == NULL)
-			return (NULL);
-		lst = lst->next;
-	}
-	return (tmp);
+	return (lst);
 }
