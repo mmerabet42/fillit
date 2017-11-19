@@ -165,7 +165,7 @@ _PURPLE=\x1b[35m
 _CYAN=\x1b[36m
 _WHITE=\x1b[37m
 _END=\x1b[0m
-_SUCCESS=$(_CYAN)
+_SUCCESS=$(_GREEN)
 
 .PHONY: all clean fclean re
 
@@ -174,9 +174,10 @@ all: $(NAME)
 $(NAME): compile
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
-	@echo "\n$(NAME) : $(_SUCCESS)done$(_END)"
+	@echo "$(NAME) : $(_SUCCESS)done$(_END)"
 
 compile:
+	@echo "$(_RED)Compiling$(_END) $(NAME) $(_GREEN)...$(_END)"
 	@$(CC) $(CFLAGS) -c $(SRCS)
 
 clean:
