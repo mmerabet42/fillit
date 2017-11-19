@@ -51,6 +51,7 @@ _OBJS	=	ft_abs.o \
 			ft_lstdel.o \
 			ft_lstdelone.o \
 			ft_lstend.o \
+			ft_lsterase.o \
 			ft_lstfind.o \
 			ft_lstiter.o \
 			ft_lstmap.o \
@@ -97,6 +98,7 @@ _OBJS	=	ft_abs.o \
 			ft_strcatc.o \
 			ft_strchr.o \
 			ft_strchr_pos.o \
+			ft_strchr_st_pos.o \
 			ft_strclr.o \
 			ft_strcmp.o \
 			ft_strcount.o \
@@ -139,6 +141,7 @@ _OBJS	=	ft_abs.o \
 			ft_strsplitstr.o \
 			ft_strstr.o \
 			ft_strstr_pos.o \
+			ft_strstr_st_pos.o \
 			ft_strsub.o \
 			ft_strtrim.o \
 			ft_swap.o \

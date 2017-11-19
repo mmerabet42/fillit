@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 19:08:24 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/12 16:22:14 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/19 17:00:59 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 t_list	*ft_lstpush(t_list *lst, t_list *elem)
 {
 	if (lst)
-		ft_lstend(lst)->next = elem;
+	{
+		lst = ft_lstend(lst);
+		lst->next = elem;
+		if (elem)
+			elem->parent = lst;
+	}
 	return (elem);
 }

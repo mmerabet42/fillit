@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 23:02:19 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/15 13:06:40 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/19 21:08:03 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	ft_strchr_pos(const char *s, int c)
 {
-	int	pos;
+	int		pos;
 
 	if (!s)
 		return (-1);
 	pos = 0;
-	while (s[pos] && s[pos] != c)
+	while (*s && *s != c)
+	{
 		++pos;
-	return ((s[pos] == '\0') ? -1 : pos);
+		++s;
+	}
+	return ((*s == '\0' && c != '\0') ? -1 : pos);
 }

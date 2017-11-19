@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpushfront.c                                  :+:      :+:    :+:   */
+/*   ft_strchr_st_pos.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 16:22:48 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/19 17:01:56 by mmerabet         ###   ########.fr       */
+/*   Created: 2017/11/19 21:12:39 by mmerabet          #+#    #+#             */
+/*   Updated: 2017/11/19 21:15:24 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstpushfront(t_list **alst, t_list *elem)
+int	ft_strchr_st_pos(const char *s, size_t start, int c)
 {
-	if (alst && elem)
-	{
-		elem = ft_lstend(elem);
-		elem->next = *alst;
-		if (*alst)
-			(*alst)->parent = elem;
-		*alst = elem;
-	}
+	int		pos;
+
+	if (!s || start >= ft_strlen(s))
+		return (-1);
+	pos = start;
+	while (s[pos] && s[pos] != c)
+		++pos;
+	return ((s[pos] == '\0' && c != '\0') ? -1 : pos);
 }
