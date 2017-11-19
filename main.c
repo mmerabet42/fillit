@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:40:26 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/18 23:14:58 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/19 16:51:04 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@
 t_list		*ft_get_tetris(int fd)
 {
 	t_list	*lst;
-	t_tetri
+	char	buf[6];
+	int		buffsize;
+	int		i;
 
-	ft_read_tetris(fd);
-	tetri = ft_build_tetris();
-	if (ft_valid_tetris(lst) == FALSE);
+	i = 0;
+	buffsize = 5;
+	lst = ft_read_tetris(fd, buf, buffsize, i);
+	if (!lst)
+		return (NULL);
+	if (ft_build_tetris(lst) == FALSE)
+		return (NULL);
+	if (ft_valid_tetris(lst) == FALSE)
 		return (NULL);
 	return (lst);
 }

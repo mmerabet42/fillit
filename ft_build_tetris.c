@@ -6,55 +6,67 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:43:43 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/18 23:14:52 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/19 17:42:48 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft/libft.h"
 
-static t_tetri	*ft_build_tetri(t_list *lst, char b)
+static int		*ft_tab_coord(char b, int i, int y, int tab[3])
 {
-	char	*str;
+	tab[0] = b;
+	tab[1] = i - 5 * (y);
+	tab[2] = y;
+	return (tab);
+}
+
+static void		ft_advance_y(char c, int *y)
+{
+	if (c == '\n')
+		(*y)++;
+}
+
+static t_tetri	*ft_pos_tetri(int tab[3], int j, t_tetri *tetri)
+{
+	tetri->c = (char)tab[0];
+	tetri->pos.x = 0;
+	tetri->pos.y = 0;
+	tetri->points[j].x = tab[1];
+	tetri->points[j].y = tab[2];
+	return (tetri);
+}
+
+static t_tetri	*ft_build_tetri(char *str, char b, t_tetri *tetri)
+{
 	int		i;
 	int		j;
 	int		y;
-	t_tetri	*tetri;
+	int		tab[3];
 
 	y = 0;
 	i = 0;
 	j = 0;
-	tetri = NULL;
-	if (lst)
+	while (str[i])
 	{
-		str = ft_strdup(lst->content);
-		while (str[i])
+		ft_advance_y(str[i], &y);
+		if (str[i] == '#')
 		{
-			if (str[i] == '\n')
-				y++;
-			if (str[i] == '#')
-			{
-				if (j > 3)
-					return (NULL);
-				if (j == 0)
-					tetri = (t_tetri *)malloc(sizeof(t_tetri));
-				tetri->c = b;
-				tetri->pos.x = 0;
-				tetri->pos.y = 0;
-				tetri->points[j].x = i - 5 * (y);
-				tetri->points[j].y = y;
-				++j;
-			}
-			i++;
+			if (j > 3)
+				return (NULL);
+			if (j == 0)
+				tetri = (t_tetri *)malloc(sizeof(t_tetri));
+			if (!tetri)
+				return (NULL);
+			ft_pos_tetri(ft_tab_coord(b, i, y, tab), j, tetri);
+			++j;
 		}
+		i++;
 	}
-	if (j != 4)
-		return (NULL);
-	lst->content = tetri;
-	return (tetri);
+	return ((j != 4) ? NULL : tetri);
 }
 
-t_list	*ft_build_tetris(t_list *lst)
+t_bool			ft_build_tetris(t_list *lst)
 {
 	char	c;
 	t_tetri	*t;
@@ -62,8 +74,11 @@ t_list	*ft_build_tetris(t_list *lst)
 	c = 'A';
 	while (lst)
 	{
-		t = ft_build_tetri(lst, c);
+		t = ft_build_tetri(lst->content, c, t);
+		if (!t)
+			return (FALSE);
+		lst->content = (void *)t;
 		lst = lst->next;
 	}
+	return (TRUE);
 }
-

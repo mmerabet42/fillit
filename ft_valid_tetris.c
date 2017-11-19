@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:44:07 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/18 23:14:44 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/19 16:35:23 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ t_bool		ft_valid_tetris(t_list *lst)
 {
 	while (lst)
 	{
-		if (ft_valid_tetri(tetri) == FALSE)
+		if (ft_valid_tetri(lst->content) == FALSE)
 			return (FALSE);
 		lst = lst->next;
+	}
+	return (TRUE);
 }
