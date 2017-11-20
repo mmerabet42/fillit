@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 18:29:05 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/20 19:30:52 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/20 19:34:56 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_list			*ft_absolute_tetris(t_list *lst)
 	while (lst)
 	{
 		t = ft_absolute_tetri(lst->content);
-		lst->content = (void *t);
+		lst->content = (void *)t;
 		lst = lst->next;
 	}
 	return (lst);
