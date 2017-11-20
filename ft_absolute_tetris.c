@@ -6,24 +6,12 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 18:29:05 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/20 19:34:56 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/20 19:56:00 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int		ft_comp_coord(int tab[4])
-{
-	int		min;
-	int		i;
-
-	i = 0;
-	min = 4;
-	while (i++ < 4)
-		if (tab[i] < min)
-			min = tab[i];
-	return (min);
-}
 static t_tetri	*ft_change_coord(t_tetri *tetri, int x, int y)
 {
 	int		i;
@@ -37,35 +25,31 @@ static t_tetri	*ft_change_coord(t_tetri *tetri, int x, int y)
 	}
 	return (tetri);
 }
-static t_tetri	*ft_absolute_tetri(t_tetri *tetri)
-{
-	int		xtab[4];
-	int		ytab[4];
-	int		i;
-	int		xmin;
-	int		ymin;
-
-	i = 0;
-
-	while (i++ < 4)
-	{
-		xtab[i] = tetri->points[i].x;
-		ytab[i] = tetri->points[i].y;
-	}
-	xmin = ft_comp_coord(xtab);
-	ymin = ft_comp_coord(ytab);
-	return (ft_change_coord(tetri, xmin, ymin));
-}
 
 t_list			*ft_absolute_tetris(t_list *lst)
 {
-	t_tetri	*t;
+	int		xmin;
+	int		ymin;
+	int		i;
+	t_tetri	*tetri;
+	t_list	*it;
 
-	while (lst)
+	xmin = 4;
+	ymin = 4;
+	it = lst;
+	while (it)
 	{
-		t = ft_absolute_tetri(lst->content);
-		lst->content = (void *)t;
-		lst = lst->next;
+		tetri = (t_tetri *)it->content;
+		i = -1;
+		while (++i < 4)
+		{
+			if (tetri->points[i].x < xmin)
+				xmin = tetri->points[i].x;
+			if (tetri->points[i].y < ymin)
+				ymin = tetri->points[i].y;
+		}
+		ft_change_coord(tetri, xmin, ymin);
+		it = it->next;
 	}
 	return (lst);
 }
