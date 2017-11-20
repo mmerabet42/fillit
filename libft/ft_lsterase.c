@@ -6,35 +6,49 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 16:57:08 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/19 18:00:20 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:02:40 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-t_list	*ft_lsterase(t_list *lst, const void *content, size_t content_size)
+static void	ft_swap_list(t_list *a, t_list *b)
+{
+	size_t	tmp;
+
+	ft_swapptr(&a->content, &b->content);
+	tmp = a->content_size;
+	a->content_size = b->content_size;
+	b->content_size = tmp;
+}
+
+t_list		*ft_lsterase(t_list **alst,
+					const void *content,
+					size_t content_size)
 {
 	t_list	*tmp;
 	t_list	*lstdel;
-	size_t	sztmp;
 
-	if ((lstdel = ft_lstfind(lst, content, content_size)))
+	if (alst && (lstdel = ft_lstfind(*alst, content, content_size)))
 	{
 		if ((tmp = lstdel->parent))
-			tmp->next = lstdel->next;
-		else if ((lstdel = lst->next))
 		{
-			if ((lst->next = lstdel->next))
-				lstdel->next->parent = lst;
-			ft_swapptr(lst->content, lstdel->content);
-			sztmp = lst->content_size;
-			lst->content_size = lstdel->content_size;
-			lstdel->content_size = sztmp;
+			if ((tmp->next = lstdel->next))
+				lstdel->next->parent = tmp;
 		}
+		else if ((*alst)->next)
+		{
+			lstdel = (*alst)->next;
+			if (((*alst)->next = lstdel->next))
+				lstdel->next->parent = *alst;
+			ft_swap_list(*alst, lstdel);
+		}
+		else
+			*alst = NULL;
 		lstdel->parent = NULL;
 		lstdel->next = NULL;
+		return (lstdel);
 	}
-	else
-		return (NULL);
-	return (lstdel);
+	return (NULL);
 }

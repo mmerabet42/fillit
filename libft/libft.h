@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 14:00:22 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/19 21:24:37 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/20 15:19:04 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ char				*ft_strnrstr(const char *a, const char *b, size_t n);
 int					ft_strchr_pos(const char *a, int b);
 int					ft_strchr_st_pos(const char *a, size_t start, int c);
 int					ft_strstr_pos(const char *a, const char *b);
-int					ft_strstr_st_pos(const char *a, size_t start, const char *b);
+int					ft_strstr_st_pos(const char *a,
+								size_t start,
+								const char *b);
 char				*ft_revstr(char *a);
 char				*ft_revnstr(char *a, size_t n);
 void				ft_swap(char *a, char *b);
@@ -179,7 +181,7 @@ size_t				ft_lstsize(t_list *lst);
 t_list				*ft_lstend(t_list *lst);
 t_list				*ft_lstcopy(t_list *lst);
 t_list				*ft_lstcopyone(t_list *lst);
-t_list				*ft_lsterase(t_list *lst,
+t_list				*ft_lsterase(t_list **alst,
 							const void *content,
 							size_t content_size);
 
