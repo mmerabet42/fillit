@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:33:18 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/18 23:17:45 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/20 16:08:14 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 		tmp = (t_tetri *)lst->content;
 		if (a != tmp)
 		{
-			printf("CHECKING COLLISION %c AND %c\n", a->c, tmp->c);
+			//printf("CHECKING COLLISION %c AND %c\n", a->c, tmp->c);
 			i = 0;
 			while (i < 4)
 			{
@@ -44,11 +44,11 @@ t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 				{
 					if (ft_pointequ(a->pos, a->points[i], tmp->pos, tmp->points[j]))
 					{
-						printf("COLLISION BETWEEN %c %c\n", a->c, tmp->c);
+						//printf("COLLISION BETWEEN %c %c\n", a->c, tmp->c);
 						return (TRUE);
 					}
-					else if (a->pos.x + a->points[i].x >= mapdata.size
-							|| a->pos.y + a->points[i].y >= mapdata.size)
+					else if (a->pos.x + a->points[i].x >= mapdata->size
+							|| a->pos.y + a->points[i].y >= mapdata->size)
 						return (TRUE);
 					++j;
 				}
@@ -57,7 +57,7 @@ t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 		}
 		lst = lst->next;
 	}
-	printf("%c NOT COLLIDING\n", a->c);
+	//printf("%c NOT COLLIDING\n", a->c);
 	return (FALSE);
 }
 
@@ -65,31 +65,45 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 {
 	t_tetri	*current_tetri;
 
-	ft_map_tetris(mapdata);
-	ft_print_map(mapdata);
-	ft_putstr("\n\n\n");
-
 	if (curr)
 	{
 		current_tetri = (t_tetri *)curr->content;
-		printf("PLACING %c %d %d\n", current_tetri->c, current_tetri->pos.x, current_tetri->pos.y);
-		if (ft_check_collisions(current_tetri, mapdata) == TRUE)
+		//printf("PLACING %c %d %d\n", current_tetri->c, current_tetri->pos.x, current_tetri->pos.y);
+		if (ft_check_collisions(current_tetri, mapdata))
 		{
 			if (++current_tetri->pos.x >= mapdata->size)
 			{
 				current_tetri->pos.x = 0;
 				if (++current_tetri->pos.y >= mapdata->size)
+				{
+					current_tetri->pos.y = 0;
 					return (0);
+				}
 			}
 			return (ft_inner_fillit(curr, mapdata));
 		}
 		else
 		{
 			if (mapdata->tetris)
-				ft_lstpush(mapdata->tetris, curr);
+				ft_lstpush(mapdata->tetris, ft_lstnew(curr->content, curr->content_size));
 			else
-				mapdata->tetris = ft_lstpush(mapdata->tetris, curr);
-			return (ft_inner_fillit(curr->next, mapdata));
+				mapdata->tetris = ft_lstpush(mapdata->tetris, ft_lstnew(curr->content, curr->content_size));
+			if (ft_inner_fillit(curr->next, mapdata) == 0)
+			{
+				if (++current_tetri->pos.x >= mapdata->size)
+				{
+					current_tetri->pos.x = 0;
+					if (++current_tetri->pos.y >= mapdata->size)
+					{
+						++mapdata->size;
+						current_tetri->pos.y = 0;
+						ft_lsterase(&mapdata->tetris, current_tetri, sizeof(t_tetri));
+						if (current_tetri->c == 'A')
+							++mapdata->size;
+						return (ft_inner_fillit(curr, mapdata));
+					}
+				}
+			}
 		}
 	}
 	return (1);
