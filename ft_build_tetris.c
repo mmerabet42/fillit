@@ -6,12 +6,11 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:43:43 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/19 17:42:48 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/20 19:31:02 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft/libft.h"
 
 static int		*ft_tab_coord(char b, int i, int y, int tab[3])
 {

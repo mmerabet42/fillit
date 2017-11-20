@@ -6,12 +6,11 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:44:21 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/19 16:51:02 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/20 19:31:19 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft/libft.h"
 
 static t_bool	ft_check_char(char *buf, int buffsize)
 {

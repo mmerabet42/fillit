@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:44:07 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/19 16:35:23 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/20 18:38:25 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ static void	ft_create_tab(int tab[4], t_tetri *tetri, char c)
 	}
 }
 
-t_bool		ft_valid_tetri(t_tetri *tetris)
+t_bool		ft_valid_tetri(t_tetri *tetri)
 {
 	int		s;
 	int		ytab[4];
 	int		xtab[4];
 
 	s = 0;
-	ft_create_tab(xtab, tetris, 'x');
-	ft_create_tab(ytab, tetris, 'y');
+	ft_create_tab(xtab, tetri, 'x');
+	ft_create_tab(ytab, tetri, 'y');
 	s = ft_d(xtab[0], ytab[0], xtab[1], ytab[1]) +
 		ft_d(xtab[0], ytab[0], xtab[2], ytab[2]) +
 		ft_d(xtab[0], ytab[0], xtab[3], ytab[3]) +
