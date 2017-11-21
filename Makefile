@@ -1,13 +1,9 @@
 NAME		=	fillit
 CC			=	gcc
-CFLAGS		=	#-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra
 
 _OBJS		=	main_v.o \
 				ft_solve_tetris.o \
-				ft_valid_tetris.o \
-				ft_read_tetris.o \
-				ft_build_tetris.o \
-				ft_absolute_tetris.o \
 				ft_print_map.o
 
 SRCS_DIR	=	.
