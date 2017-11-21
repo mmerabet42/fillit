@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:40:26 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/20 22:13:48 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/21 15:22:54 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			main(int argc, char **argv)
 	{
 		t_list	*lst;
 		if ((lst = ft_get_tetris(fd)) == NULL)
-			ft_putendl("KO");
+			ft_putendl("error");
 		else
 		{
 			//lst = ft_absolute_tetris(lst);
