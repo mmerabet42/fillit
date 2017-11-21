@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:43:43 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/20 19:31:02 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/21 19:00:00 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_tetri	*ft_pos_tetri(int tab[3], int j, t_tetri *tetri)
 	tetri->c = (char)tab[0];
 	tetri->pos.x = 0;
 	tetri->pos.y = 0;
+	tetri->ignore = TRUE;
 	tetri->points[j].x = tab[1];
 	tetri->points[j].y = tab[2];
 	return (tetri);
@@ -73,7 +74,7 @@ t_bool			ft_build_tetris(t_list *lst)
 	c = 'A';
 	while (lst)
 	{
-		t = ft_build_tetri(lst->content, c, t);
+		t = ft_build_tetri(lst->content, c++, t);
 		if (!t)
 			return (FALSE);
 		lst->content = (void *)t;

@@ -6,13 +6,14 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:40:26 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/21 15:45:08 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/21 20:39:33 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "fillit.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 t_list		*ft_get_tetris(int fd)
 {
@@ -55,10 +56,9 @@ int			main(int argc, char **argv)
 			ft_putendl("error");
 		else
 		{
-			//lst = ft_absolute_tetris(lst);
+			lst = ft_absolute_tetris(lst);
 			//ft_lstiter(lst, brint);
-			t_mapdata *mapdata = ft_solve_tetris(lst);
-			ft_print_map(mapdata);
+			ft_print_map(ft_solve_tetris(lst));
 			//ft_putendl("Tetris are valid.");
 		}
 	}

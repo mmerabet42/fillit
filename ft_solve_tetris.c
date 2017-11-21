@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:33:18 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/21 18:03:24 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/21 19:10:46 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 		//printf("PLACING %c %d %d\n", current_tetri->c, current_tetri->pos.x, current_tetri->pos.y);
 		if (ft_tetriout(t, mapdata->size) || ft_check_collisions(t, mapdata->tetris))
 		{
-			if (++t->pos.x >= mapdata->size || ft_tetriout(t, mapdata->size))
+			if (++t->pos.x >= mapdata->size)
 			{
 				t->pos.x = 0;
-				if (++t->pos.y >= mapdata->size || ft_tetriout(t, mapdata->size))
+				if (++t->pos.y >= mapdata->size)
 				{
 					t->pos.y = 0;
 					//printf("%c CANT BE PLACED REPLACING PREVIOUS TETRI\n", current_tetri->c);
