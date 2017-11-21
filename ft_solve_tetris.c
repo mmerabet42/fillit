@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:33:18 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/20 22:14:31 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/21 18:03:24 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,29 @@ t_bool		ft_pointequ(t_point apos, t_point a, t_point bpos, t_point b)
 	return (FALSE);
 }
 
-t_bool		ft_tetriout(t_tetri *a, size_t size)
+t_bool		ft_tetriout(t_tetri *a, int size)
 {
 	int	i;
 
 	i = -1;
 	while (++i < 4)
-		if (a->pos.x + a->points[i].x >= size
-			|| a->pos.y + a->points[i].y >= size)
+		if ((a->pos.x + a->points[i].x) >= size
+			|| (a->pos.y + a->points[i].y) >= size)
 			return (TRUE);
 	return (FALSE);
 }
 
-t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
+t_bool		ft_check_collisions(t_tetri *a, t_list *tetris)
 {
 	int			i;
 	int			j;
 	t_tetri		*tmp;
-	t_list		*lst;
 
-	lst = mapdata->tetris;
-	if (!lst)
+	if (!tetris)
 		return (FALSE);
-	while (lst)
+	while (tetris)
 	{
-		tmp = (t_tetri *)lst->content;
+		tmp = (t_tetri *)tetris->content;
 		if (a != tmp && tmp->ignore == FALSE)
 		{
 			//printf("CHECKING COLLISION %c AND %c\n", a->c, tmp->c);
@@ -58,7 +56,7 @@ t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 						return (TRUE);
 			}
 		}
-		lst = lst->next;
+		tetris = tetris->next;
 	}
 	//printf("%c NOT COLLIDING\n", a->c);
 	return (FALSE);
@@ -72,12 +70,12 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 	{
 		t = (t_tetri *)curr->content;
 		//printf("PLACING %c %d %d\n", current_tetri->c, current_tetri->pos.x, current_tetri->pos.y);
-		if (ft_tetriout(t, mapdata->size) || ft_check_collisions(t, mapdata))
+		if (ft_tetriout(t, mapdata->size) || ft_check_collisions(t, mapdata->tetris))
 		{
-			if (++t->pos.x >= mapdata->size)
+			if (++t->pos.x >= mapdata->size || ft_tetriout(t, mapdata->size))
 			{
 				t->pos.x = 0;
-				if (++t->pos.y >= mapdata->size)
+				if (++t->pos.y >= mapdata->size || ft_tetriout(t, mapdata->size))
 				{
 					t->pos.y = 0;
 					//printf("%c CANT BE PLACED REPLACING PREVIOUS TETRI\n", current_tetri->c);
@@ -93,18 +91,15 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 		{
 			t->ignore = FALSE;
 			//printf("ADDING %c TO TETRIS\n", current_tetri->c);
-			//if (mapdata->tetris)
-			//	ft_lstpushback(mapdata->tetris, curr->content, curr->content_size);
-			//else
-			//	mapdata->tetris = ft_lstpushback(mapdata->tetris, curr->content, curr->content_size);
 			//printf("PLACING NEXT TETRI\n");
 			//ft_map_tetris(mapdata);
 			//ft_print_map(mapdata);
 			//printf("\n\n");
+			//sleep(1);
+			//system("clear");
 			if (ft_inner_fillit(curr->next, mapdata) == 0)
 			{
 				//printf("REPLACING %c\n", current_tetri->c);
-				//ft_lsterase(&mapdata->tetris, t, sizeof(t_tetri));
 				t->ignore = TRUE;
 				if (++t->pos.x >= mapdata->size)
 				{
@@ -145,7 +140,7 @@ void		ft_map_tetris(t_mapdata *mapdata)
 	{
 		i = 0;
 		tmp = (t_tetri *)it->content;
-		while (i < 4)
+		while (!tmp->ignore && i < 4)
 		{
 			ypos = tmp->pos.y + tmp->points[i].y;
 			xpos = tmp->pos.x + tmp->points[i].x;
