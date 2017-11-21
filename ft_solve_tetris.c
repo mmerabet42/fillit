@@ -20,6 +20,18 @@ t_bool		ft_pointequ(t_point apos, t_point a, t_point bpos, t_point b)
 	return (FALSE);
 }
 
+t_bool		ft_tetriout(t_tetri *a, size_t size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+		if (a->pos.x + a->points[i].x >= size
+			|| a->pos.y + a->points[i].y >= size)
+			return (TRUE);
+	return (FALSE);
+}
+
 t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 {
 	int			i;
@@ -28,47 +40,22 @@ t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 	t_list		*lst;
 
 	lst = mapdata->tetris;
-	if (lst == NULL)
-	{
-		i = 0;
-		while (i < 4)
-		{
-			if (a->pos.x + a->points[i].x >= mapdata->size
-				|| a->pos.y + a->points[i].y >= mapdata->size)
-			{
-				//printf("POINT OF %c IS OUTSIDE MAP\n", a->c);
-				return (TRUE);
-			}
-			++i;
-		}
+	if (!lst)
 		return (FALSE);
-	}
 	while (lst)
 	{
 		tmp = (t_tetri *)lst->content;
-		if (a != tmp)
+		if (a != tmp && tmp->ignore == FALSE)
 		{
 			//printf("CHECKING COLLISION %c AND %c\n", a->c, tmp->c);
-			i = 0;
-			while (i < 4)
+			i = -1;
+			while (++i < 4)
 			{
-				j = 0;
-				while (j < 4)
-				{
+				j = -1;
+				while (++j < 4)
 					if (ft_pointequ(a->pos, a->points[i], tmp->pos, tmp->points[j]))
-					{
 						//printf("COLLISION BETWEEN %c AND %c\n", a->c, tmp->c);
 						return (TRUE);
-					}
-					else if (a->pos.x + a->points[i].x >= mapdata->size
-						|| a->pos.y + a->points[i].y >= mapdata->size)
-					{
-						//printf("POINT OF %c IS OUTSIDE MAP\n", a->c);
-						return (TRUE);
-					}
-					++j;
-				}
-				++i;
 			}
 		}
 		lst = lst->next;
@@ -79,22 +66,22 @@ t_bool		ft_check_collisions(t_tetri *a, t_mapdata *mapdata)
 
 int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 {
-	t_tetri	*current_tetri;
+	t_tetri	*t;
 
 	if (curr)
 	{
-		current_tetri = (t_tetri *)curr->content;
+		t = (t_tetri *)curr->content;
 		//printf("PLACING %c %d %d\n", current_tetri->c, current_tetri->pos.x, current_tetri->pos.y);
-		if (ft_check_collisions(current_tetri, mapdata))
+		if (ft_tetriout(t, mapdata->size) || ft_check_collisions(t, mapdata))
 		{
-			if (++current_tetri->pos.x >= mapdata->size)
+			if (++t->pos.x >= mapdata->size)
 			{
-				current_tetri->pos.x = 0;
-				if (++current_tetri->pos.y >= mapdata->size)
+				t->pos.x = 0;
+				if (++t->pos.y >= mapdata->size)
 				{
-					current_tetri->pos.y = 0;
+					t->pos.y = 0;
 					//printf("%c CANT BE PLACED REPLACING PREVIOUS TETRI\n", current_tetri->c);
-					if (!mapdata->tetris)
+					if (curr == mapdata->tetris)
 						++mapdata->size;
 					else
 						return (0);
@@ -104,11 +91,12 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 		}
 		else
 		{
+			t->ignore = FALSE;
 			//printf("ADDING %c TO TETRIS\n", current_tetri->c);
-			if (mapdata->tetris)
-				ft_lstpush(mapdata->tetris, ft_lstnew(curr->content, curr->content_size));
-			else
-				mapdata->tetris = ft_lstpush(mapdata->tetris, ft_lstnew(curr->content, curr->content_size));
+			//if (mapdata->tetris)
+			//	ft_lstpushback(mapdata->tetris, curr->content, curr->content_size);
+			//else
+			//	mapdata->tetris = ft_lstpushback(mapdata->tetris, curr->content, curr->content_size);
 			//printf("PLACING NEXT TETRI\n");
 			//ft_map_tetris(mapdata);
 			//ft_print_map(mapdata);
@@ -116,15 +104,16 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 			if (ft_inner_fillit(curr->next, mapdata) == 0)
 			{
 				//printf("REPLACING %c\n", current_tetri->c);
-				ft_lsterase(&mapdata->tetris, current_tetri, sizeof(t_tetri));
-				if (++current_tetri->pos.x >= mapdata->size)
+				//ft_lsterase(&mapdata->tetris, t, sizeof(t_tetri));
+				t->ignore = TRUE;
+				if (++t->pos.x >= mapdata->size)
 				{
 					//printf("X IS TOO BIG %c %d %d\n", current_tetri->c, current_tetri->pos.x, current_tetri->pos.y);
-					current_tetri->pos.x = 0;
-					if (++current_tetri->pos.y >= mapdata->size)
+					t->pos.x = 0;
+					if (++t->pos.y >= mapdata->size)
 					{
 					//	printf("MAP IS TOO SMALL FOR %c\n", current_tetri->c);
-						current_tetri->pos.y = 0;
+						t->pos.y = 0;
 					}
 				}
 				return (ft_inner_fillit(curr, mapdata));
@@ -179,7 +168,7 @@ t_mapdata	*ft_solve_tetris(t_list *tetris)
 	mapdata->size = 2;
 	while (ft_pow(mapdata->size, 2) < nbtetris * 4)
 		++mapdata->size;
-	mapdata->tetris = NULL;
+	mapdata->tetris = tetris;
 	ft_inner_fillit(tetris, mapdata);
 	ft_map_tetris(mapdata);
 	return (mapdata);

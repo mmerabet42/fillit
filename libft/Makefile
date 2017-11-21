@@ -48,6 +48,7 @@ _OBJS	=	ft_abs.o \
 			ft_lstatpos.o \
 			ft_lstcopy.o \
 			ft_lstcopyone.o \
+			ft_lstcreate.o \
 			ft_lstdel.o \
 			ft_lstdelone.o \
 			ft_lstend.o \
@@ -57,6 +58,7 @@ _OBJS	=	ft_abs.o \
 			ft_lstmap.o \
 			ft_lstnew.o \
 			ft_lstpush.o \
+			ft_lstpushback.o \
 			ft_lstpushfront.o \
 			ft_lstsize.o \
 			ft_ltoa.o \

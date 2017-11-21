@@ -17,6 +17,8 @@
 
 #include "libft/libft.h"
 
+typedef int t_bool;
+
 typedef struct	s_point
 {
 	int			x;
@@ -28,6 +30,7 @@ typedef struct	s_tetri
 	char		c;
 	t_point		pos;
 	t_point		points[4];
+	t_bool		ignore;
 }				t_tetri;
 
 typedef struct	s_mapdata
@@ -37,9 +40,6 @@ typedef struct	s_mapdata
 	t_list		*tetris;
 }				t_mapdata;
 
-typedef int t_bool;
-
-void	ft_fillit(int fd);
 
 t_list		*ft_get_tetris(int fd);
 t_list		*ft_read_tetris(int fd, char buf[6], int buffsize, int i);

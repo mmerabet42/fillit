@@ -17,6 +17,7 @@ t_tetri	ft_new_tetri(char c, int x, int y, int p0x, int p0y,
 {
 	t_tetri	p;
 
+	p.ignore = TRUE;
 	p.c = c;
 	p.pos.x = x;
 	p.pos.y = y;
