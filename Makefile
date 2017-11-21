@@ -2,7 +2,7 @@ NAME		=	fillit
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 
-_OBJS		=	main_v.o \
+_OBJS		=	main.o \
 				ft_solve_tetris.o \
 				ft_print_map.o
 
