@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:33:18 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/21 19:10:46 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/22 23:10:09 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,41 +118,7 @@ int			ft_inner_fillit(t_list *curr, t_mapdata *mapdata)
 	return (1);
 }
 
-void		ft_map_tetris(t_mapdata *mapdata)
-{
-	int	i;
-	int	xpos, ypos;
-	t_tetri	*tmp;
-	t_list	*it;
-
-	i = mapdata->size;
-	if ((mapdata->arr = (char **)malloc(sizeof(char *) * i)) == NULL)
-		return ;
-	i = 0;
-	while (i < mapdata->size)
-	{
-		mapdata->arr[i] = (char *)malloc(sizeof(char) * mapdata->size);
-		ft_memset(mapdata->arr[i], '.', mapdata->size);
-		++i;
-	}
-	it = mapdata->tetris;
-	while (it)
-	{
-		i = 0;
-		tmp = (t_tetri *)it->content;
-		while (!tmp->ignore && i < 4)
-		{
-			ypos = tmp->pos.y + tmp->points[i].y;
-			xpos = tmp->pos.x + tmp->points[i].x;
-			if (xpos < mapdata->size && ypos < mapdata->size)
-				mapdata->arr[ypos][xpos] = tmp->c;
-			++i;
-		}
-		it = it->next;
-	}
-}
-
-t_mapdata	*ft_solve_tetris(t_list *tetris)
+void		ft_solve_tetris(t_list *tetris)
 {
 	t_mapdata	*mapdata;
 	int			nbtetris;
@@ -166,5 +132,5 @@ t_mapdata	*ft_solve_tetris(t_list *tetris)
 	mapdata->tetris = tetris;
 	ft_inner_fillit(tetris, mapdata);
 	ft_map_tetris(mapdata);
-	return (mapdata);
+	ft_print_map(mapdata);
 }

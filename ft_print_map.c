@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 15:41:14 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/19 16:39:28 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/22 23:08:57 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,33 @@ t_tetri	ft_new_tetri(char c, int x, int y, int p0x, int p0y,
 	return (p);
 }
 
+void		ft_map_tetris(t_mapdata *mapdata)
+{
+	int	i;
+	int	xpos, ypos;
+	t_tetri	*tmp;
+	t_list	*it;
+
+	i = mapdata->size;
+	if (!(mapdata->arr = (char *)malloc(sizeof(char) * (mapdata->size * mapdata->size))))
+		return ;
+	it = mapdata->tetris;
+	while (it)
+	{
+		i = 0;
+		tmp = (t_tetri *)it->content;
+		while (!tmp->ignore && i < 4)
+		{
+			ypos = tmp->pos.y + tmp->points[i].y;
+			xpos = tmp->pos.x + tmp->points[i].x;
+			if (xpos < mapdata->size && ypos < mapdata->size)
+				mapdata->arr[xpos * mapdata->size + ypos] = tmp->c;
+			++i;
+		}
+		it = it->next;
+	}
+}
+
 void	ft_print_map(t_mapdata *mapdata)
 {
 	int	xpos;
@@ -43,7 +70,7 @@ void	ft_print_map(t_mapdata *mapdata)
 		xpos = 0;
 		while (xpos < mapdata->size)
 		{
-			ft_putchar(mapdata->arr[ypos][xpos]);
+			ft_putchar(mapdata->arr[xpos * mapdata->size + ypos]);
 			++xpos;
 		}
 		ft_putchar('\n');

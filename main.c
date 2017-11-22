@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:40:26 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/22 22:55:19 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/22 23:03:46 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_list		*ft_get_tetris(int fd)
 		return (NULL);
 	if (ft_valid_tetris(lst) == FALSE)
 		return (NULL);
-	ft_absolute_tetris(lst);
+	lst = ft_absolute_tetris(lst);
 	return (lst);
 }
 

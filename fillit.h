@@ -6,7 +6,7 @@
 /*   By: mmerabet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 22:41:21 by mmerabet          #+#    #+#             */
-/*   Updated: 2017/11/22 22:58:18 by mmerabet         ###   ########.fr       */
+/*   Updated: 2017/11/22 23:06:27 by mmerabet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_tetri
 typedef struct	s_mapdata
 {
 	int			size;
-	char		**arr;
+	char		*arr;
 	t_list		*tetris;
 }				t_mapdata;
 
