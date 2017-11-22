@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 22:44:21 by vtennero          #+#    #+#             */
-/*   Updated: 2017/11/21 15:19:27 by vtennero         ###   ########.fr       */
+/*   Updated: 2017/11/22 18:44:01 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ static t_bool	ft_check_char(char *buf, int buffsize)
 
 static char		*ft_list_tetris(char *str, char buf[6], int i, int *buffsize)
 {
+	char	*tmp;
+
+	tmp = str;
 	if (i == 0)
 		str = ft_strdup(buf);
 	else if (i == 3)
@@ -44,6 +47,8 @@ static char		*ft_list_tetris(char *str, char buf[6], int i, int *buffsize)
 		*buffsize = 5;
 	else
 		str = ft_strjoin(str, buf);
+	if (tmp)
+		free (tmp);
 	return (str);
 }
 
