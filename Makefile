@@ -4,6 +4,7 @@ CFLAGS		=	-Wall -Werror -Wextra
 
 _OBJS		=	main.o \
 				ft_solve_tetris.o \
+				ft_get_tetris.o \
 				ft_read_tetris.o \
 				ft_valid_tetris.o \
 				ft_build_tetris.o \
@@ -32,25 +33,24 @@ _END=\x1b[0m
 _SUCCESS=$(_GREEN)
 
 .PHONY: all clean fclean re
-.SILENT:
 
 all: $(NAME)
 
 $(NAME): $(LIBFT)
-	echo "$(_RED)Compiling$(_END) $(NAME) $(_GREEN)...$(_END)"
-	$(CC) $(CFLAGS) -c $(SRCS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
-	echo  "$(NAME) : $(_SUCCESS)done$(_END)"
+	@echo "$(_RED)Compiling$(_END) $(NAME) $(_GREEN)...$(_END)"
+	@$(CC) $(CFLAGS) -c $(SRCS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
+	@echo  "$(NAME) : $(_SUCCESS)done$(_END)"
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 clean:
-	/bin/rm -f $(OBJS)
-	make clean -C $(LIBFT_DIR)
+	@/bin/rm -f $(OBJS)
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	/bin/rm -f $(NAME) 
-	make fclean -C $(LIBFT_DIR)
+	@/bin/rm -f $(NAME) 
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
